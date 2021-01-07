@@ -1,14 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Detail</title>
-</head>
-<body>
+{% extends 'memories/base.html' %}
 
-<p>
-    Memories Data
-</p>
+{% block title %}
+    <p>Memories data</p>
+{% endblock %}
 
-</body>
-</html>
+{% block content %}
+    <h4 class="text-center"> You're {{ user.first_name }} {{ user.last_name }} </h4>
+{% for data in backends.associated %}
+    <div align="center">
+        <p>
+            {{ data.extra_data.name }}
+        </p>
+            <img src="{{data.extra_data.picture.data.url}}" alt="Profile picture" style="border-radius: 50%"
+                 width="150" height="150">
+    </div>
+{% endfor %}
+
+<div align="center">
+    <a href="{% url 'logout' %}">Logout</a>
+</div>
+
+{% endblock %}

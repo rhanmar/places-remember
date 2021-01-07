@@ -1,17 +1,15 @@
-from django.http import HttpResponse
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 
-def index(request):
-    # return HttpResponse('Hello!')
-    return render(request, 'memories/index.html', {})
+def login(request):
+    return render(request, 'memories/login.html')
 
 
+@login_required
 def detail(request):
-    # return HttpResponse('Detail')
-    return render(request, 'memories/detail.html', {})
+    return render(request, 'memories/detail.html')
 
 
 def add(request):
-    # return HttpResponse('add')
     return render(request, 'memories/add.html', {})
