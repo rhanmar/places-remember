@@ -1,6 +1,8 @@
 README
 =====================
 
+[![Coverage Status](https://coveralls.io/repos/github/rhanmar/places-remember/badge.svg?branch=master)](https://coveralls.io/github/rhanmar/places-remember?branch=master)  
+
 ## Description
 This app allows you to store your memories about different places.  
 After logging in you will be redirected to the main page with list of all the information.  
