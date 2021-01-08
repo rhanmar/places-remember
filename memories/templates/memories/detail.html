@@ -16,10 +16,10 @@
 {% endfor %}
 
 <div align="center">
-    {% if user.place_set.count == 0 %}
+    {% if places|length == 0 %}
         You don't have any memories <br>
     {% else %}
-        {% for place in user.place_set.all %}
+        {% for place in places %}
             <br>
             Name: {{ place.name }} <br>
             Coordinates: {{ place.point.latitude }}, {{ place.point.longitude }} <br>

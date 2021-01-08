@@ -30,6 +30,15 @@ class MemoriesTest(TestCase):
         response = client.get(reverse('detail'))
         self.assertEqual(response.status_code, 200)
 
+    def test_user_detail_context(self):
+        """
+        Test that detail-view returns a correct context
+        """
+        client = Client()
+        client.login(username='test_user', password='pas123')
+        response = client.get(reverse('detail'))
+        self.assertEqual(len(self.user.place_set.all()), len(response.context['places']))
+
     def test_user_add_get(self):
         """
         Test that authenticated user is allowed to get the page for adding the memories

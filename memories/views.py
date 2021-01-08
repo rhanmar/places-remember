@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
@@ -17,7 +16,7 @@ def detail(request):
     """
     View to show information about User's memories
     """
-    return render(request, 'memories/detail.html')
+    return render(request, 'memories/detail.html', {'places': request.user.place_set.all()})
 
 
 def add(request):
