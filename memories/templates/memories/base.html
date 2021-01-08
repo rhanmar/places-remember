@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    {% block map_head %} {% endblock %}
 </head>
 <body>
 <h1 align="center">
@@ -13,8 +14,6 @@
     {% block title %}
     {% endblock %}
 </h3>
-
-<p> Hello, {{ user }} </p>
 
 <p>
     {% block content %}

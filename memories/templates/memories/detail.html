@@ -5,16 +5,33 @@
 {% endblock %}
 
 {% block content %}
-    <h4 class="text-center"> You're {{ user.first_name }} {{ user.last_name }} </h4>
 {% for data in backends.associated %}
     <div align="center">
-        <p>
+        <h4>
             {{ data.extra_data.name }}
-        </p>
+        </h4>
             <img src="{{data.extra_data.picture.data.url}}" alt="Profile picture" style="border-radius: 50%"
                  width="150" height="150">
     </div>
 {% endfor %}
+
+<div align="center">
+    {% if user.place_set.count == 0 %}
+        You don't have any memories <br>
+    {% else %}
+        {% for place in user.place_set.all %}
+            <br>
+            Name: {{ place.name }} <br>
+            Coordinates: {{ place.point.latitude }}, {{ place.point.longitude }} <br>
+            Comment: {{ place.comment }} <br>
+            <br>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<div align="center">
+    <a href="{% url 'add' %}">Add new memory</a>
+</div>
 
 <div align="center">
     <a href="{% url 'logout' %}">Logout</a>

@@ -1,5 +1,88 @@
 {% extends 'memories/base.html' %}
 
+{% block map_head %}
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.0.1/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.0.1/mapbox-gl.css" rel="stylesheet" />
+    <style>
+        body { margin: 0; padding: 0; }
+        #map { position: absolute; top: 1; bottom: 5; right : 0; width: 50%; height: 50% }
+    </style>
+{% endblock %}
+
+{% block title %}
+    Add a new memory
+{% endblock %}
+
 {% block content %}
-    <p>Add memory</p>
+    <style>
+        .coordinates {
+        background: rgba(0, 0, 0, 0.5);
+        color: #fff;
+        position: absolute;
+        bottom: 40px;
+        left: 10px;
+        padding: 5px 10px;
+        margin: 0;
+        font-size: 11px;
+        line-height: 18px;
+        border-radius: 3px;
+        display: none;
+        }
+    </style>
+
+    <div id="map"></div>
+    <pre id="coordinates" class="coordinates"></pre>
+    <div align="left">
+    <form action="{% url 'add' %}" method="post">
+        {% csrf_token %}
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name"> <br>
+
+        <label for="comment">Comment:</label>
+        <input type="text" name="comment" id="comment"> <br>
+
+        <label for="lat">Latitude:</label>
+        <input type="text" name="lat" id="lat" readonly value="0"> <br>
+
+        <label for="long">Longitude:</label>
+        <input type="text" name="long" id="long" readonly value="0"> <br>
+
+        <input type="submit" value="Add memory">
+    </form>
+    </div>
+
+    <div>
+        <br>
+        <a href="{% url 'detail' %}">Back</a>
+    </div>
+
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoiNzhxd2UiLCJhIjoiY2tqbXB5d2ExMTBhdTJ6czJ5a3BzOGY2cyJ9.RIwfpS-XL57UJqqqKCEZ_A';
+        var coordinates = document.getElementById('coordinates');
+        var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [0, 0],
+        zoom: 2
+        });
+
+        var marker = new mapboxgl.Marker({
+        draggable: true
+        })
+        .setLngLat([0, 0])
+        .addTo(map);
+
+        function onDragEnd() {
+        var lngLat = marker.getLngLat();
+        coordinates.style.display = 'block';
+        coordinates.innerHTML =
+        'Longitude: ' + lngLat.lng + '<br />Latitude: ' + lngLat.lat;
+        var lngLat = marker.getLngLat();
+        document.getElementById('long').value=lngLat.lng
+        document.getElementById('lat').value=lngLat.lat
+        }
+
+        marker.on('dragend', onDragEnd);
+</script>
+
 {% endblock %}
